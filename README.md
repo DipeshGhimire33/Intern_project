@@ -190,12 +190,12 @@ Possible future improvements include:
 
 ## 👨‍💻 Author
 
-**[Your Name]**
+**Dipesh Ghimire**
 
 Data Science & Machine Learning Intern
 
-* GitHub: [Your GitHub Profile]
-* LinkedIn: [Your LinkedIn Profile]
+* GitHub: https://github.com/DipeshGhimire33/Intern_project
+* LinkedIn: https://www.linkedin.com/in/dipesh-ghimire-b00118370/
 
 ## 📄 License
 
