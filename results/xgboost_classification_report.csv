@@ -1,0 +1,8 @@
+              precision    recall  f1-score   support
+
+  Non-Sepsis   0.985256  0.969460  0.977294    304121
+      Sepsis   0.135839  0.248638  0.175692      5872
+
+    accuracy                       0.955805    309993
+   macro avg   0.560548  0.609049  0.576493    309993
+weighted avg   0.969166  0.955805  0.962110    309993
