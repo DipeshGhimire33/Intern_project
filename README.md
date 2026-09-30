@@ -106,6 +106,20 @@ The Kaggle version used for this project is:
 Dataset:
 https://www.kaggle.com/datasets/salikhussaini49/prediction-of-sepsis
 
+> **📁 Dataset availability**
+>
+> The raw and processed dataset files are not included in this GitHub repository because of their large file sizes and GitHub's file-size limitations. The original dataset can be obtained from the Kaggle source linked above.
+>
+> The local project workflow uses the following files:
+>
+> * `data/raw/raw_Dataset.csv`
+> * `data/processed/train_processed.csv`
+> * `data/processed/val_processed.csv`
+> * `data/processed/test_processed.csv`
+>
+> These files are excluded from version control using `.gitignore`. The notebooks document the preprocessing workflow required to generate the processed datasets from the raw data.
+
+
 The dataset contains longitudinal observations collected from patients during their ICU stays.
 
 The original dataset used in this project contains:
