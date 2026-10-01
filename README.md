@@ -48,9 +48,6 @@ The main objective is to investigate whether aggregated clinical and temporal in
 
 ```text
 sepsis-prediction/
-├── data/
-│   ├── raw/
-│   └── processed/
 ├── models/
 │   ├── xgboost_sepsis_model.pkl
 │   ├── logistic_regression_baseline.pkl
@@ -58,27 +55,29 @@ sepsis-prediction/
 │   ├── hist_gradient_boosting_baseline.pkl
 │   └── linear_svm_baseline.pkl
 ├── notebooks/
-│   ├── 01_eda.ipynb
-│   ├── 02_data_preprocessing.ipynb
+│   ├── 01_EDA.ipynb
+│   ├── 02_Data_preprocessing.ipynb
 │   ├── 03_modeling_xgboost.ipynb
 │   ├── 04_modeling_baselines.ipynb
 │   ├── 05_model_comparison.ipynb
 │   └── 06_final_evaluation.ipynb
 ├── results/
-│   ├── validation_model_comparison.csv
 │   ├── test_model_comparison.csv
-│   └── xgboost_classification_report.txt
+│   ├── validation_model_comparison.csv
+│   └── xgboost_classification_report.csv
 ├── summary/
-│   ├── 01_eda_summary.md
-│   ├── 02_preprocessing_summary.md
-│   ├── 03_xgboost_modeling_summary.md
-│   ├── 04_baseline_models_summary.md
+│   ├── 01_EDA_summary.md
+│   ├── 02_Data_preprocessing.md
+│   ├── 03_modelling_Xgboost_summary.md
+│   ├── 04_model_baseline_summary.md
 │   ├── 05_model_comparison_summary.md
 │   └── 06_final_evaluation_summary.md
 ├── requirements.txt
 ├── README.md
 └── .gitignore
 ```
+
+> The raw and processed datasets are intentionally excluded from the repository because of their large file sizes. They are used locally during the notebook workflow.
 
 ---
 
@@ -88,8 +87,8 @@ The project is based on the **PhysioNet/CinC Challenge 2019: Early Prediction of
 
 ### Sources
 
-* [PhysioNet/CinC Challenge 2019](https://physionet.org/content/challenge-2019/1.0.0/)
-* [Kaggle dataset used for this project](https://www.kaggle.com/datasets/salikhussaini49/prediction-of-sepsis)
+* **PhysioNet/CinC Challenge 2019** — official challenge dataset and documentation.
+* **Kaggle — Prediction of Sepsis** — dataset source used for this project.
 
 The original dataset contains clinical observations collected over time for patients admitted to intensive care units.
 
@@ -116,7 +115,7 @@ The dataset is therefore highly imbalanced, making metrics such as **PR-AUC, pre
 
 The raw and processed dataset files are **not included in this GitHub repository** because of their large file sizes.
 
-The original dataset can be obtained from the sources above.
+The original dataset can be obtained from the PhysioNet/CinC Challenge 2019 and Kaggle sources.
 
 The local workflow uses:
 
@@ -179,7 +178,7 @@ The raw observation count also decreases over ICU time because patients have dif
 
 For a detailed explanation of the exploratory analysis, findings, and interpretation, see:
 
-**[01_eda_summary.md](summary/01_eda_summary.md)**
+[01_EDA_summary.md](summary/01_EDA_summary.md)
 
 ---
 
@@ -262,13 +261,15 @@ A few variables require additional interpretation:
 
 ### Domain References
 
-The clinical meaning of the variables was informed by:
+The clinical meaning of the variables was informed by the following references:
 
-* [PhysioNet/CinC Challenge 2019](https://physionet.org/content/challenge-2019/1.0.0/)
-* [MedlinePlus — Complete Blood Count](https://medlineplus.gov/lab-tests/complete-blood-count-cbc/)
+* [PhysioNet/CinC Challenge 2019 — Early Prediction of Sepsis](https://physionet.org/content/challenge-2019/1.0.0/)
+* [MedlinePlus — Complete Blood Count (CBC)](https://medlineplus.gov/lab-tests/complete-blood-count-cbc/)
 * [MedlinePlus — Kidney Function Tests](https://medlineplus.gov/ency/article/003435.htm)
-* [MedlinePlus — Basic Metabolic Panel](https://medlineplus.gov/lab-tests/basic-metabolic-panel-bmp/)
+* [MedlinePlus — Basic Metabolic Panel (BMP)](https://medlineplus.gov/lab-tests/basic-metabolic-panel-bmp/)
 * [Merck Manual — Laboratory Tests of the Liver and Gallbladder](https://www.merckmanuals.com/professional/hepatic-and-biliary-disorders/testing-for-hepatic-and-biliary-disorders/laboratory-tests-of-the-liver-and-gallbladder)
+
+The domain assignments themselves are **project-specific feature-engineering categories**, not official PhysioNet categories or validated clinical classifications.
 
 ---
 
@@ -563,23 +564,25 @@ The project is organized into six main notebooks.
 
 ### 01 — Exploratory Data Analysis
 
-`notebooks/01_eda.ipynb`
+`notebooks/01_EDA.ipynb`
 
 Performs dataset exploration, class distribution analysis, missingness analysis, patient-level statistics, correlations, outlier analysis, and temporal analysis.
 
 **Detailed documentation:**
-[01_eda_summary.md](summary/01_eda_summary.md)
+
+[01_EDA_summary.md](summary/01_EDA_summary.md)
 
 ---
 
 ### 02 — Data Preprocessing
 
-`notebooks/02_data_preprocessing.ipynb`
+`notebooks/02_Data_preprocessing.ipynb`
 
 Covers patient-level splitting, patient-wise forward filling, clinical deviation features, domain-level aggregation, ICU unit representation, and construction of the final feature set.
 
 **Detailed documentation:**
-[02_preprocessing_summary.md](summary/02_preprocessing_summary.md)
+
+[02_Data_preprocessing.md](summary/02_Data_preprocessing.md)
 
 ---
 
@@ -590,7 +593,8 @@ Covers patient-level splitting, patient-wise forward filling, clinical deviation
 Develops the XGBoost model, handles class imbalance, evaluates validation performance, examines learning behavior, performs threshold analysis, and investigates feature importance.
 
 **Detailed documentation:**
-[03_xgboost_modeling_summary.md](summary/03_xgboost_modeling_summary.md)
+
+[03_modelling_Xgboost_summary.md](summary/03_modelling_Xgboost_summary.md)
 
 ---
 
@@ -601,7 +605,8 @@ Develops the XGBoost model, handles class imbalance, evaluates validation perfor
 Trains and evaluates Logistic Regression, Random Forest, HistGradientBoosting, and Linear SVM baseline models.
 
 **Detailed documentation:**
-[04_baseline_models_summary.md](summary/04_baseline_models_summary.md)
+
+[04_model_baseline_summary.md](summary/04_model_baseline_summary.md)
 
 ---
 
@@ -612,6 +617,7 @@ Trains and evaluates Logistic Regression, Random Forest, HistGradientBoosting, a
 Compares all evaluated models using validation and held-out test metrics and applies validation-selected thresholds.
 
 **Detailed documentation:**
+
 [05_model_comparison_summary.md](summary/05_model_comparison_summary.md)
 
 ---
@@ -623,6 +629,7 @@ Compares all evaluated models using validation and held-out test metrics and app
 Performs the final XGBoost evaluation using the validation-selected configuration and held-out test set. Includes the confusion matrix, PR curve, ROC curve, classification report, feature importance, interpretation, limitations, and conclusion.
 
 **Detailed documentation:**
+
 [06_final_evaluation_summary.md](summary/06_final_evaluation_summary.md)
 
 ---
@@ -631,14 +638,14 @@ Performs the final XGBoost evaluation using the validation-selected configuratio
 
 For readers who want a deeper understanding of the methodology and reasoning behind each stage, the repository includes a dedicated summary for every notebook.
 
-| Notebook                      | Detailed Summary                                                         |
-| ----------------------------- | ------------------------------------------------------------------------ |
-| `01_eda.ipynb`                | [01_eda_summary.md](summary/01_eda_summary.md)                           |
-| `02_data_preprocessing.ipynb` | [02_preprocessing_summary.md](summary/02_preprocessing_summary.md)       |
-| `03_modeling_xgboost.ipynb`   | [03_xgboost_modeling_summary.md](summary/03_xgboost_modeling_summary.md) |
-| `04_modeling_baselines.ipynb` | [04_baseline_models_summary.md](summary/04_baseline_models_summary.md)   |
-| `05_model_comparison.ipynb`   | [05_model_comparison_summary.md](summary/05_model_comparison_summary.md) |
-| `06_final_evaluation.ipynb`   | [06_final_evaluation_summary.md](summary/06_final_evaluation_summary.md) |
+| Notebook                      | Detailed Summary                                                           |
+| ----------------------------- | -------------------------------------------------------------------------- |
+| `01_EDA.ipynb`                | [01_EDA_summary.md](summary/01_EDA_summary.md)                             |
+| `02_Data_preprocessing.ipynb` | [02_Data_preprocessing.md](summary/02_Data_preprocessing.md)               |
+| `03_modeling_xgboost.ipynb`   | [03_modelling_Xgboost_summary.md](summary/03_modelling_Xgboost_summary.md) |
+| `04_modeling_baselines.ipynb` | [04_model_baseline_summary.md](summary/04_model_baseline_summary.md)       |
+| `05_model_comparison.ipynb`   | [05_model_comparison_summary.md](summary/05_model_comparison_summary.md)   |
+| `06_final_evaluation.ipynb`   | [06_final_evaluation_summary.md](summary/06_final_evaluation_summary.md)   |
 
 > **For in-depth understanding:** The summary files explain the methodology, important implementation decisions, results, interpretation, and limitations of each notebook. The notebooks contain the corresponding code and analysis.
 
@@ -690,9 +697,9 @@ jupyter notebook
 The notebooks should generally be executed in the following order:
 
 ```text
-01_eda.ipynb
+01_EDA.ipynb
       ↓
-02_data_preprocessing.ipynb
+02_Data_preprocessing.ipynb
       ↓
 03_modeling_xgboost.ipynb
       ↓
@@ -712,13 +719,13 @@ The required dataset files are not included in the repository and must be obtain
 The repository contains:
 
 * Trained model files in `models/`
-* Validation comparison results in `results/`
-* Test comparison results in `results/`
-* XGBoost classification report in `results/`
+* Validation comparison results in `results/validation_model_comparison.csv`
+* Test comparison results in `results/test_model_comparison.csv`
+* XGBoost classification report in `results/xgboost_classification_report.csv`
 * Detailed notebook summaries in `summary/`
 * Complete analysis notebooks in `notebooks/`
 
-The datasets themselves are excluded because of their large size.
+The datasets themselves are excluded from version control because of their large size. The preprocessing notebook documents how the local processed datasets were generated.
 
 ---
 
@@ -728,8 +735,9 @@ The datasets themselves are excluded because of their large size.
 
 Machine Learning / Data Science Internship Project
 
-**Github :** https://github.com/DipeshGhimire33/Intern_project
-**LinkedIn :** https://www.linkedin.com/in/dipesh-ghimire-b00118370/
+**GitHub:** DipeshGhimire33/Intern_project
+
+**LinkedIn:** Dipesh Ghimire
 
 ---
 
