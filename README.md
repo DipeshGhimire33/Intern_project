@@ -1,70 +1,62 @@
-# 🩺 Sepsis Prediction Using Machine Learning
+# Sepsis Prediction Using Machine Learning
 
-## 📌 Project Overview
+## Project Overview
 
-This project was developed as part of my **Data Science and Machine Learning Internship**.
+This project focuses on developing a machine learning pipeline for **early prediction of sepsis using clinical data**.
 
-The objective of this project is to develop and evaluate a **machine learning-based approach for predicting sepsis from longitudinal clinical patient data**. The project follows a complete machine learning workflow, including data exploration, patient-level data splitting, preprocessing, feature engineering, model development, model comparison, and final evaluation.
+The project uses patient-level clinical observations from the **PhysioNet/CinC Challenge 2019: Early Prediction of Sepsis from Clinical Data** dataset. The workflow covers exploratory data analysis, patient-level data splitting, missing-value handling, clinical feature engineering, machine learning model development, baseline comparison, threshold selection, and final evaluation.
 
-The dataset is based on the **PhysioNet/CinC Challenge 2019: Early Prediction of Sepsis from Clinical Data** and contains physiological measurements, laboratory measurements, demographic information, and temporal variables collected over patients' ICU stays.
+The main objective is to investigate whether aggregated clinical and temporal information can be used to identify patients at increased risk of sepsis.
 
-The project focuses on predicting the dataset's `SepsisLabel`, which identifies observations within the dataset-defined sepsis prediction window.
-
-> **⚠️ Important:** This project is intended for educational and research purposes. The resulting model is **not a medical diagnostic system** and must not be used to make clinical decisions.
+> **Important:** This is an educational/research project and is not intended for clinical diagnosis, treatment decisions, or deployment in healthcare settings.
 
 ---
 
-## 🎯 Objectives
+## Objectives
 
-The main objectives of this project are:
-
-* Understand and analyze a longitudinal clinical dataset
-* Perform exploratory data analysis (EDA)
-* Analyze missingness, class imbalance, correlations, and outliers
-* Prevent patient-level data leakage during model development
-* Develop a clinically informed feature-engineering approach
-* Reduce the original feature space into a smaller set of interpretable domain-level features
-* Handle missing clinical measurements while preserving information where possible
-* Develop an XGBoost-based sepsis prediction model
-* Develop traditional machine learning baseline models
-* Compare model performance using appropriate classification metrics
-* Analyze classification-threshold effects
-* Examine model feature importance and interpretability
-* Perform final evaluation on a held-out test dataset
+* Explore the structure and characteristics of the sepsis dataset.
+* Analyze class imbalance, missing values, correlations, and temporal patterns.
+* Prevent patient-level data leakage through patient-wise train/validation/test splitting.
+* Apply patient-wise forward filling to preserve the temporal structure of clinical observations.
+* Engineer clinically meaningful domain-level features.
+* Develop an XGBoost-based sepsis prediction model.
+* Compare XGBoost with several baseline machine learning models.
+* Evaluate models using metrics appropriate for highly imbalanced classification.
+* Select decision thresholds using the validation set.
+* Perform final evaluation on the held-out test set.
+* Analyze model feature importance and interpretability.
+* Document the complete methodology and findings for reproducibility and deeper understanding.
 
 ---
 
-## 🛠️ Technologies Used
+## Technologies
 
-* **Python** — Programming language
-* **NumPy** — Numerical computation
-* **Pandas** — Data manipulation and analysis
-* **Matplotlib** — Data visualization
-* **Seaborn** — Statistical visualization
-* **Scikit-learn** — Machine learning and evaluation
-* **XGBoost** — Gradient boosting model
-* **SHAP** — Model interpretability
-* **Jupyter Notebook** — Development and experimentation
-* **Joblib** — Model serialization
+* Python
+* Pandas
+* NumPy
+* Matplotlib
+* Seaborn
+* Scikit-learn
+* XGBoost
+* SHAP
+* Joblib
+* Jupyter Notebook
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
 sepsis-prediction/
-│
 ├── data/
 │   ├── raw/
 │   └── processed/
-│
 ├── models/
 │   ├── xgboost_sepsis_model.pkl
 │   ├── logistic_regression_baseline.pkl
 │   ├── random_forest_baseline.pkl
 │   ├── hist_gradient_boosting_baseline.pkl
 │   └── linear_svm_baseline.pkl
-│
 ├── notebooks/
 │   ├── 01_eda.ipynb
 │   ├── 02_data_preprocessing.ipynb
@@ -72,12 +64,10 @@ sepsis-prediction/
 │   ├── 04_modeling_baselines.ipynb
 │   ├── 05_model_comparison.ipynb
 │   └── 06_final_evaluation.ipynb
-│
 ├── results/
 │   ├── validation_model_comparison.csv
 │   ├── test_model_comparison.csv
 │   └── xgboost_classification_report.txt
-│
 ├── summary/
 │   ├── 01_eda_summary.md
 │   ├── 02_preprocessing_summary.md
@@ -85,7 +75,6 @@ sepsis-prediction/
 │   ├── 04_baseline_models_summary.md
 │   ├── 05_model_comparison_summary.md
 │   └── 06_final_evaluation_summary.md
-│
 ├── requirements.txt
 ├── README.md
 └── .gitignore
@@ -93,147 +82,110 @@ sepsis-prediction/
 
 ---
 
-# 📊 Dataset
+# Dataset
 
-The dataset used in this project is based on the:
+The project is based on the **PhysioNet/CinC Challenge 2019: Early Prediction of Sepsis from Clinical Data** dataset.
 
-**PhysioNet/CinC Challenge 2019: Early Prediction of Sepsis from Clinical Data**
+### Sources
 
-The Kaggle version used for this project is:
+* [PhysioNet/CinC Challenge 2019](https://physionet.org/content/challenge-2019/1.0.0/)
+* [Kaggle dataset used for this project](https://www.kaggle.com/datasets/salikhussaini49/prediction-of-sepsis)
 
-**Kaggle — Prediction of Sepsis**
+The original dataset contains clinical observations collected over time for patients admitted to intensive care units.
 
-Dataset:
-https://www.kaggle.com/datasets/salikhussaini49/prediction-of-sepsis
+### Dataset Characteristics
 
-> **📁 Dataset availability**
->
-> The raw and processed dataset files are not included in this GitHub repository because of their large file sizes and GitHub's file-size limitations. The original dataset can be obtained from the Kaggle source linked above.
->
-> The local project workflow uses the following files:
->
-> * `data/raw/raw_Dataset.csv`
-> * `data/processed/train_processed.csv`
-> * `data/processed/val_processed.csv`
-> * `data/processed/test_processed.csv`
->
-> These files are excluded from version control using `.gitignore`. The notebooks document the preprocessing workflow required to generate the processed datasets from the raw data.
+After removing the unnamed/index column:
 
+* **Rows:** 1,552,210
+* **Columns:** 43
+* **Unique patients:** 40,336
+* **Non-sepsis observations:** 1,524,294
+* **Sepsis observations:** 27,916
+* **Sepsis observation rate:** approximately 1.80%
 
-The dataset contains longitudinal observations collected from patients during their ICU stays.
+At the patient level:
 
-The original dataset used in this project contains:
+* **Sepsis-positive patients:** 2,932
+* **Sepsis-negative patients:** 37,404
+* **Patient-level positive rate:** approximately 7.27%
 
-* **1,552,210 observations**
-* **43 variables after removing the original index column**
-* **40,336 unique patients**
-* **34 clinical measurements**
-* Demographic variables
-* ICU-related variables
-* Temporal variables
-* `SepsisLabel` as the prediction target
+The dataset is therefore highly imbalanced, making metrics such as **PR-AUC, precision, recall, and F1-score** particularly important.
 
-### Main types of variables
+### Dataset Availability
 
-The clinical measurements include:
+The raw and processed dataset files are **not included in this GitHub repository** because of their large file sizes.
 
-* Heart rate
-* Oxygen saturation
-* Temperature
-* Systolic blood pressure
-* Mean arterial pressure
-* Diastolic blood pressure
-* Respiratory rate
-* End-tidal CO₂
-* Blood gas measurements
-* Glucose
-* Lactate
-* BUN
-* Creatinine
-* WBC
-* Platelets
-* Hemoglobin
-* Hematocrit
-* Liver-related measurements
-* Coagulation-related measurements
-* Electrolytes
+The original dataset can be obtained from the sources above.
 
-Additional variables include:
-
-* Age
-* Gender
-* ICU unit information
-* Hospital admission time
-* ICU length of stay
-* Hour
-* Patient ID
-
-The target variable is:
+The local workflow uses:
 
 ```text
-SepsisLabel
+data/raw/raw_Dataset.csv
+
+data/processed/train_processed.csv
+data/processed/val_processed.csv
+data/processed/test_processed.csv
 ```
 
-where `1` represents the positive class according to the dataset's sepsis-label definition and `0` represents the negative class.
+These files are excluded from version control through `.gitignore`.
+
+The notebooks document the preprocessing workflow used to generate the processed datasets.
 
 ---
 
-# 🔍 Methodology
+# Exploratory Data Analysis
 
-## 1. Data Loading and Initial Inspection
+The exploratory analysis examined:
 
-The raw dataset was loaded using Pandas and examined for:
-
-* Dataset dimensions
-* Data types
-* Feature names
-* Missing values
-* Duplicate records
+* Dataset dimensions and feature types
 * Target distribution
-* Patient-level structure
+* Patient-level statistics
+* Missing-value patterns
+* Duplicate records
+* Feature distributions
+* Outliers
+* Correlations between clinical variables
+* Temporal patterns across ICU hours
+* Differences between observation-level and patient-level class distributions
 
-The original unnamed/index column was removed before analysis.
+### Important EDA Findings
+
+The dataset contains substantial missingness, particularly among laboratory measurements.
+
+Examples include:
+
+* Bilirubin_direct: approximately 99.81% missing
+* Fibrinogen: approximately 99.34% missing
+* TroponinI: approximately 99.05% missing
+* Lactate: approximately 97.33% missing
+* WBC: approximately 93.59% missing
+
+Missingness is therefore an important characteristic of the dataset rather than a simple preprocessing inconvenience.
+
+No duplicate records were identified.
+
+Several clinically related variables were strongly correlated, including:
+
+* Bilirubin_direct and Bilirubin_total
+* Hct and Hgb
+* BaseExcess and HCO3
+* MAP and DBP
+* SBP and MAP
+
+The raw observation count also decreases over ICU time because patients have different ICU stay lengths.
+
+### Detailed EDA Documentation
+
+For a detailed explanation of the exploratory analysis, findings, and interpretation, see:
+
+**[01_eda_summary.md](summary/01_eda_summary.md)**
 
 ---
 
-## 2. Exploratory Data Analysis
+# Patient-Level Data Splitting
 
-EDA was performed in `01_eda.ipynb`.
-
-The analysis included:
-
-* Dataset structure
-* Missing-value analysis
-* Duplicate analysis
-* Target-class distribution
-* Patient-level analysis
-* Numerical feature distributions
-* Outlier analysis
-* Correlation analysis
-* Feature comparison between sepsis and non-sepsis observations
-* Time-based analysis
-* Interpretation of important patterns
-
-### Class imbalance
-
-The observation-level target distribution was:
-
-| Class      |     Count | Percentage |
-| ---------- | --------: | ---------: |
-| Non-Sepsis | 1,524,294 |     98.20% |
-| Sepsis     |    27,916 |      1.80% |
-
-This substantial class imbalance made **Precision-Recall AUC (PR-AUC)** an important evaluation metric.
-
-At the patient level, approximately **7.27% of patients** had at least one positive sepsis observation.
-
----
-
-## 3. Patient-Level Data Splitting
-
-Because each patient contributes multiple observations over time, randomly splitting individual rows could cause information from the same patient to appear in both training and evaluation sets.
-
-To reduce this form of patient-level data leakage, the dataset was split based on unique `Patient_ID`.
+To reduce the risk of patient-level data leakage, the dataset was divided using **Patient_ID rather than individual observations**.
 
 The approximate split was:
 
@@ -241,171 +193,139 @@ The approximate split was:
 * **10% validation**
 * **20% testing**
 
-The same patient appears in only one of these datasets.
+This ensures that observations belonging to the same patient do not appear across multiple dataset partitions.
 
-The target distributions were:
+Target distribution:
 
-| Dataset    | Non-Sepsis | Sepsis |
+| Split      | Non-Sepsis | Sepsis |
 | ---------- | ---------: | -----: |
-| Training   |  1,067,723 | 19,268 |
+| Train      |  1,067,723 | 19,268 |
 | Validation |    152,450 |  2,776 |
 | Test       |    304,121 |  5,872 |
 
+The validation set was used for model comparison and threshold selection.
+
+The test set was reserved for final performance reporting.
+
 ---
 
-# 🧹 Data Preprocessing
+# Data Preprocessing
 
-Preprocessing was performed in `02_data_preprocessing.ipynb`.
+## Patient-Wise Forward Filling
 
-## 4. Patient-Wise Forward Filling
+Clinical observations are collected sequentially over time.
 
-Clinical measurements are collected irregularly, meaning that a measurement may not be recorded at every hour.
+Therefore, missing clinical measurements were handled using **forward filling within each patient**:
 
-For suitable clinical variables, missing observations were forward-filled **within each patient**.
-
-The data was first sorted by:
-
-```text
-Patient_ID
-Hour
+```python
+data.groupby("Patient_ID")[features].ffill()
 ```
 
-Forward filling was then performed separately for each patient.
+This allows a previously observed clinical value to remain available until a newer measurement is recorded.
 
-This prevents measurements from one patient from being propagated into another patient's records.
+Forward filling was performed separately within each dataset split to avoid cross-patient and cross-split information leakage.
 
-`Age` was excluded from forward filling because it contained no missing values.
+`Age` was excluded from forward filling because it was already complete.
 
----
+### Remaining Missingness
 
-## 5. Missing Values
+After forward filling, some laboratory variables continued to have substantial missingness.
 
-After patient-wise forward filling, substantial missingness remained, particularly among laboratory variables.
+This was expected because many laboratory tests are not performed at every ICU time point.
 
-Instead of aggressively imputing all clinical measurements, the project preserved missing values in the core feature representation.
+Rather than aggressively imputing these values, the project preserved missingness for the tree-based XGBoost model, which can handle missing values natively.
 
-This was chosen because missingness itself can contain information about which clinical measurements were ordered or available.
-
-The final tree-based modeling approach was able to handle missing values directly.
-
-For baseline models that required complete numerical inputs, median imputation was fitted using the training data and then applied to validation and test data.
+Baseline models requiring complete input used median imputation.
 
 ---
 
-# 🧠 Feature Engineering
+# Clinical Domain Feature Engineering
+
+The original PhysioNet/CinC documentation defines the individual clinical variables, but it does **not prescribe the five project-specific physiological domains used here**.
+
+The five domains were created as a **project-specific feature-engineering strategy** based on the physiological or laboratory meaning of the variables.
+
+The domain assignments are therefore not intended to represent formal diagnostic categories or validated clinical scoring systems.
+
+| Domain                                   | Features                                                                                                |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| **Hemodynamic**                          | HR, SBP, MAP, DBP                                                                                       |
+| **Respiratory**                          | Resp, O2Sat, Temp, EtCO2, FiO2, pH, PaCO2, SaO2                                                         |
+| **Renal / Metabolic**                    | BaseExcess, HCO3, BUN, Creatinine, Calcium, Chloride, Magnesium, Phosphate, Potassium, Glucose, Lactate |
+| **Inflammatory / Hematological**         | WBC, Platelets, Hgb, Hct, Fibrinogen                                                                    |
+| **Hepatic / Coagulation / Organ Injury** | AST, Alkalinephos, Bilirubin_total, Bilirubin_direct, PTT, TroponinI                                    |
+
+A few variables require additional interpretation:
+
+* **Temperature** is a general vital sign rather than a strictly respiratory measurement.
+* **TroponinI** is primarily a marker of cardiac injury and is included in the final broad laboratory/organ-injury domain rather than being interpreted as a hepatic marker.
+
+### Domain References
+
+The clinical meaning of the variables was informed by:
+
+* [PhysioNet/CinC Challenge 2019](https://physionet.org/content/challenge-2019/1.0.0/)
+* [MedlinePlus — Complete Blood Count](https://medlineplus.gov/lab-tests/complete-blood-count-cbc/)
+* [MedlinePlus — Kidney Function Tests](https://medlineplus.gov/ency/article/003435.htm)
+* [MedlinePlus — Basic Metabolic Panel](https://medlineplus.gov/lab-tests/basic-metabolic-panel-bmp/)
+* [Merck Manual — Laboratory Tests of the Liver and Gallbladder](https://www.merckmanuals.com/professional/hepatic-and-biliary-disorders/testing-for-hepatic-and-biliary-disorders/laboratory-tests-of-the-liver-and-gallbladder)
 
 ---
 
-## 6. Clinical Domain Features
+# Domain-Level Deviation Scores
 
-Rather than using all original clinical measurements independently, the project applied a **domain-level feature aggregation approach** to reduce the clinical feature space while retaining information from related physiological measurements.
+To summarize heterogeneous clinical measurements, heuristic reference ranges were used to calculate how far an observed value deviated from its reference interval.
 
-The original PhysioNet/CinC 2019 dataset provides definitions for individual vital signs and laboratory variables, but it does **not prescribe the five clinical domains used in this project**. The following domains were therefore defined specifically for this project based on the physiological system or clinical interpretation represented by the variables.
+For an observed value:
 
-### Hemodynamic
+* Values inside the reference interval received a deviation score of 0.
+* Values below or above the interval received a normalized deviation.
+* `log1p` transformation was subsequently applied to reduce the effect of extreme deviations.
 
-* HR
-* SBP
-* MAP
-* DBP
+These reference ranges were used **only for feature engineering** and should not be interpreted as validated sepsis diagnostic thresholds.
 
-These measurements describe heart rate and arterial blood pressure and were grouped to represent cardiovascular and circulatory status.
-
-### Respiratory
-
-* Resp
-* O2Sat
-* Temp
-* EtCO2
-* FiO2
-* pH
-* PaCO2
-* SaO2
-
-These variables describe respiration, oxygenation, ventilation, and related physiological status. Temperature is a general vital sign rather than a strictly respiratory measurement, but was included in this broader physiological domain for the project's feature-engineering design.
-
-### Renal / Metabolic
-
-* BaseExcess
-* HCO3
-* BUN
-* Creatinine
-* Calcium
-* Chloride
-* Magnesium
-* Phosphate
-* Potassium
-* Glucose
-* Lactate
-
-These variables represent kidney-function-related measurements, electrolytes, glucose, lactate, and acid-base/metabolic status.
-
-### Inflammatory / Hematological
-
-* WBC
-* Platelets
-* Hgb
-* Hct
-* Fibrinogen
-
-These measurements represent white blood cells, blood-cell characteristics, platelet status, and blood/coagulation-related physiology.
-
-### Hepatic / Coagulation
-
-* AST
-* Alkalinephos
-* Bilirubin_total
-* Bilirubin_direct
-* PTT
-* TroponinI
-
-AST, alkaline phosphatase, and bilirubin measurements are associated with hepatic laboratory assessment, while PTT represents coagulation status. Troponin I is primarily a cardiac injury marker and was included in this broader laboratory/organ-injury domain rather than being treated as a liver-specific measurement.
-
-### Clinical reference basis
-
-The domain assignments were informed by:
-
-* The original PhysioNet/CinC 2019 variable definitions
-* Standard clinical laboratory classifications
-* Standard medical reference sources for blood counts, kidney/metabolic testing, liver testing, and coagulation-related measurements
-
-These domain assignments are **project-specific feature-engineering categories**, not formal diagnostic categories or validated clinical scoring systems.
-
-### References
-
-* **PhysioNet/CinC Challenge 2019 — Early Prediction of Sepsis from Clinical Data**
-  https://physionet.org/content/challenge-2019/1.0.0/
-
-* **MedlinePlus — Complete Blood Count (CBC)**
-  https://medlineplus.gov/lab-tests/complete-blood-count-cbc/
-
-* **MedlinePlus — Kidney Function Tests**
-  https://medlineplus.gov/ency/article/003435.htm
-
-* **MedlinePlus — Basic Metabolic Panel**
-  https://medlineplus.gov/lab-tests/basic-metabolic-panel-bmp/
-
-* **Merck Manual Professional Edition — Laboratory Tests of the Liver and Gallbladder**
-  https://www.merckmanuals.com/professional/hepatic-and-biliary-disorders/testing-for-hepatic-and-biliary-disorders/laboratory-tests-of-the-liver-and-gallbladder
----
-
-## 7. Domain-Level Deviation Scores
-
-For the clinical measurements, heuristic reference ranges were used to calculate how far an observed value deviated from a predefined reference interval.
-
-These ranges were used for **feature engineering only** and were not intended to represent validated diagnostic thresholds.
-
-A weighted deviation score was then calculated for each clinical domain.
+The resulting feature values were then aggregated into five domain-level scores using weighted averages.
 
 The weighting incorporated:
 
-* Clinical-importance priors defined for the project
+* Project-specific clinical importance
+* Observed association with the target in the training data
 * Feature availability
-* Observed deviation from the reference range
 
-The resulting domain scores provided a compact representation of the original clinical variables.
+The resulting domain scores were:
 
-The five resulting clinical features were:
+* Hemodynamic
+* Respiratory
+* Renal_Metabolic
+* Inflammatory_Hematological
+* Hepatic_Coagulation
+
+This approach reduced the original clinical feature space while preserving broader physiological information.
+
+---
+
+# Temporal and Demographic Features
+
+In addition to the five clinical domain scores, the final feature set included selected temporal and demographic information.
+
+### Temporal Features
+
+* `Hour`
+* `ICULOS`
+* `HospAdmTime`
+
+### Demographic / ICU Features
+
+* `Gender`
+* `ICU_Unit`
+
+`Unit1` and `Unit2` were found to be complementary indicators of ICU unit assignment, so they were represented using a single `ICU_Unit` feature.
+
+---
+
+# Final Feature Set
+
+The final model used **10 features**:
 
 ```text
 Hemodynamic
@@ -413,143 +333,91 @@ Respiratory
 Renal_Metabolic
 Inflammatory_Hematological
 Hepatic_Coagulation
-```
-
----
-
-## 8. Temporal and Demographic Features
-
-Temporal and demographic information was retained because the observations represent a longitudinal ICU process.
-
-The final temporal features were:
-
-```text
 Hour
 ICULOS
 HospAdmTime
-```
-
-The final demographic/administrative features were:
-
-```text
 Gender
 ICU_Unit
 ```
 
-`Unit1` and `Unit2` contained complementary ICU-unit information and were therefore represented by a single `ICU_Unit` feature.
+The final feature design combines:
+
+1. Aggregated physiological information
+2. Temporal progression
+3. Demographic information
+4. ICU context
 
 ---
 
-## 9. Final Feature Set
-
-The final model used **10 features**:
-
-```text
-1. Hemodynamic
-2. Respiratory
-3. Renal_Metabolic
-4. Inflammatory_Hematological
-5. Hepatic_Coagulation
-6. Hour
-7. ICULOS
-8. HospAdmTime
-9. Gender
-10. ICU_Unit
-```
-
-This reduced the original clinical feature space into a smaller and more interpretable representation.
-
----
-
-# 🤖 Model Development
-
-## 10. XGBoost Model
+# XGBoost Model
 
 The primary model was an **XGBoost binary classification model**.
 
-The model used:
+Configuration:
 
-* 300 estimators
-* Maximum tree depth of 6
-* Learning rate of 0.05
-* Subsampling
-* Feature subsampling
-* Class-imbalance weighting
-* Histogram-based tree construction
-
-The positive-class weight was approximately:
-
-```text
-55.41
+```python
+XGBClassifier(
+    n_estimators=300,
+    max_depth=6,
+    learning_rate=0.05,
+    subsample=0.8,
+    colsample_bytree=0.8,
+    scale_pos_weight=55.4143,
+    objective="binary:logistic",
+    eval_metric="aucpr",
+    tree_method="hist",
+    random_state=42,
+    n_jobs=-1
+)
 ```
 
-This reflected the strong imbalance between the sepsis and non-sepsis observations in the training data.
+Because the target was highly imbalanced, `scale_pos_weight` was used to increase the importance of the minority class during training.
 
-The validation learning curve was used to identify the strongest validation PR-AUC region. The final evaluation reproduced this state using the first **48 trees** of the saved 300-tree model.
+The validation learning curve indicated that the best validation PR-AUC occurred around the first 48 boosting iterations.
+
+For final evaluation, the saved 300-tree model was therefore evaluated using:
+
+```python
+iteration_range=(0, 48)
+```
 
 ---
 
-# 🧪 Baseline Models
+# Baseline Models
 
-Several baseline models were developed for comparison:
+Four baseline models were evaluated against XGBoost:
 
 * Logistic Regression
 * Random Forest
 * HistGradientBoosting
 * Linear SVM
 
-The baseline models used the same final feature set.
+Median imputation was used for models that could not directly handle missing values.
 
-For models that required complete numerical inputs, median imputation was fitted using only the training data.
-
-No StandardScaler was used in the baseline modeling workflow.
+The comparison was performed using the same patient-level train/validation/test framework.
 
 ---
 
-# 📈 Model Evaluation
+# Evaluation Metrics
 
-Because the dataset is highly imbalanced, accuracy alone does not adequately describe model performance.
+Because sepsis observations represent a small minority of the dataset, accuracy alone is not sufficient for evaluating model performance.
 
-The following metrics were used:
+The project therefore focuses on:
 
-### Accuracy
+* **PR-AUC:** important for imbalanced classification
+* **ROC-AUC:** measures ranking/discrimination ability
+* **Precision:** proportion of predicted positives that were actually positive
+* **Recall:** proportion of actual positives detected
+* **F1-score:** harmonic mean of precision and recall
+* **Accuracy:** overall classification accuracy
 
-The proportion of all observations classified correctly.
-
-### Precision
-
-The proportion of predicted positive observations that were actually positive.
-
-### Recall
-
-The proportion of actual positive observations that were correctly identified.
-
-### F1-Score
-
-The harmonic mean of precision and recall.
-
-### ROC-AUC
-
-Measures ranking/discrimination performance across classification thresholds.
-
-### PR-AUC
-
-Precision-Recall AUC was used as an important metric because the positive class is relatively uncommon.
-
-### Confusion Matrix
-
-The confusion matrix provides:
-
-* True Positives
-* True Negatives
-* False Positives
-* False Negatives
+Decision thresholds were selected using the validation set rather than the test set.
 
 ---
 
-# 📊 Model Comparison Results
+# Final Test Results
 
-The following results were obtained on the held-out test dataset using thresholds selected from the validation data.
+The following results were obtained on the held-out test set.
 
 | Model                | Accuracy | Precision |   Recall | F1-Score |  ROC-AUC |   PR-AUC |
 | -------------------- | -------: | --------: | -------: | -------: | -------: | -------: |
@@ -559,35 +427,39 @@ The following results were obtained on the held-out test dataset using threshold
 | HistGradientBoosting | 0.954060 |  0.128011 | 0.245232 | 0.168214 | 0.786422 | 0.088892 |
 | Linear SVM           | 0.775450 |  0.050508 | 0.609843 | 0.093290 | 0.744026 | 0.071523 |
 
-The results demonstrate different precision-recall trade-offs between the models.
+### Interpretation
 
-XGBoost produced a test **PR-AUC of 0.092856** and **ROC-AUC of 0.791266**.
+XGBoost achieved the highest **test PR-AUC (0.092856)** and **ROC-AUC (0.791266)** among the evaluated models.
 
-Random Forest produced a test **F1-score of 0.180434** with precision of 0.139223 and recall of 0.256301.
+Random Forest achieved a slightly higher **F1-score (0.180434)** and **recall (0.256301)** at its selected threshold.
 
-The Linear SVM produced substantially higher recall at its evaluated threshold, but this came with lower precision and therefore a lower F1-score.
+These differences demonstrate why multiple evaluation metrics are reported rather than selecting a model using a single metric.
 
-These results illustrate why multiple evaluation metrics are necessary for highly imbalanced classification problems.
+Because the dataset is highly imbalanced, PR-AUC provides particularly useful information about positive-class performance.
 
 ---
 
-# 🎯 Classification Threshold
+# Decision Threshold
 
 The default classification threshold of 0.50 was not assumed to be optimal.
 
-Threshold analysis was performed using the validation dataset.
+Thresholds were evaluated on the validation set, and a threshold was selected for each model based on validation performance.
 
-For the final XGBoost evaluation, a threshold of:
+For the final XGBoost model:
 
 ```text
-0.80
+Validation-selected threshold = 0.80
 ```
 
-was selected based on the validation analysis.
+The threshold was selected **only using validation data** and then applied unchanged to the held-out test set.
 
-At this threshold, the final XGBoost test performance was:
+---
 
-| Metric    |    Value |
+# Final XGBoost Evaluation
+
+Using the first 48 boosting iterations and a classification threshold of 0.80, the final XGBoost test performance was:
+
+| Metric    |    Score |
 | --------- | -------: |
 | Accuracy  | 0.955805 |
 | Precision | 0.135839 |
@@ -596,46 +468,25 @@ At this threshold, the final XGBoost test performance was:
 | ROC-AUC   | 0.791266 |
 | PR-AUC    | 0.092856 |
 
-The threshold was selected using validation data rather than the test set.
-
----
-
-# 🧮 Final XGBoost Confusion Matrix
-
-The final XGBoost test confusion matrix was:
+### Confusion Matrix
 
 ```text
 [[294833   9288]
  [  4412   1460]]
 ```
 
-Therefore:
+Where:
 
-|                   | Predicted Non-Sepsis | Predicted Sepsis |
-| ----------------- | -------------------: | ---------------: |
-| Actual Non-Sepsis |              294,833 |            9,288 |
-| Actual Sepsis     |                4,412 |            1,460 |
-
-This corresponds to:
-
-* **True Negatives:** 294,833
-* **False Positives:** 9,288
-* **False Negatives:** 4,412
-* **True Positives:** 1,460
+* True Negatives = 294,833
+* False Positives = 9,288
+* False Negatives = 4,412
+* True Positives = 1,460
 
 ---
 
-# 🔬 Model Interpretability
+# Model Interpretability
 
-Model interpretation was investigated using:
-
-* XGBoost built-in feature importance
-* Permutation importance
-* SHAP analysis
-
-The XGBoost feature importance analysis showed that several temporal and clinical-domain variables contributed substantially to model predictions.
-
-Approximate built-in feature importance:
+XGBoost feature importance was examined to understand which engineered features contributed most strongly to the model.
 
 | Feature                    | Importance |
 | -------------------------- | ---------: |
@@ -650,189 +501,156 @@ Approximate built-in feature importance:
 | Hepatic_Coagulation        |   0.053556 |
 | Hemodynamic                |   0.046843 |
 
-`ICULOS` was the most prominent feature according to the model's built-in importance measure.
+`ICULOS` had the largest built-in feature importance, followed by the Respiratory domain and Hour.
 
-Permutation importance also showed strong contributions from `ICULOS`, `Hour`, and the clinical-domain features.
+Permutation importance and SHAP analysis were also used to provide additional interpretability.
 
-These importance measures describe how the trained model uses the available features. They should **not be interpreted as evidence of causality or clinical importance**.
-
----
-
-# 💡 Key Findings
-
-The project produced several important observations.
-
-### 1. Strong class imbalance
-
-Only approximately **1.80% of observations** belonged to the positive sepsis class.
-
-This makes accuracy an insufficient standalone evaluation metric.
-
-### 2. High clinical missingness
-
-Many laboratory measurements contained substantial missing values.
-
-Patient-wise forward filling reduced some missingness, but considerable missingness remained in several laboratory-derived domains.
-
-### 3. Patient-level splitting is important
-
-Each patient contributes multiple observations over time.
-
-Therefore, patient-level splitting was used to prevent observations from the same patient from being distributed across training, validation, and test datasets.
-
-### 4. Dimensionality reduction
-
-The original clinical measurements were transformed into five domain-level features:
-
-```text
-Hemodynamic
-Respiratory
-Renal_Metabolic
-Inflammatory_Hematological
-Hepatic_Coagulation
-```
-
-This reduced the number of clinical predictors while retaining information from multiple physiological and laboratory measurements.
-
-### 5. Temporal variables contributed strongly
-
-Variables such as `ICULOS` and `Hour` showed substantial model importance.
-
-This indicates that the temporal context of ICU observations plays an important role in the learned prediction patterns.
-
-However, these variables may also capture ICU stay duration, measurement patterns, or dataset structure rather than purely physiological changes.
-
-### 6. Threshold selection affects performance
-
-Changing the classification threshold produced different precision-recall trade-offs.
-
-This is particularly important in highly imbalanced medical prediction problems.
+Feature importance should be interpreted as **model behavior**, not as evidence that a feature causally produces sepsis.
 
 ---
 
-# ⚠️ Limitations
+# Key Findings
 
-This project has several limitations.
-
-* The model was developed using a single dataset.
-* Results may not generalize to other hospitals or patient populations.
-* The dataset contains substantial missing clinical measurements.
-* Clinical observations are irregularly sampled.
-* The domain reference ranges used for feature engineering are heuristic and were not clinically validated for this project.
-* The domain weighting scheme represents project-specific assumptions rather than validated clinical scoring.
-* Temporal variables may capture ICU workflow, length of stay, or measurement patterns in addition to physiological information.
-* The evaluation was performed retrospectively on an existing dataset.
-* No prospective clinical validation was performed.
-* Model calibration was not the primary focus of this project.
-* The final model should not be interpreted as a clinical diagnostic or decision-support system.
+* The dataset is highly imbalanced at the observation level.
+* Patient-level splitting is important to reduce leakage from repeated observations of the same patient.
+* Clinical measurements contain substantial missingness, particularly among laboratory tests.
+* Patient-wise forward filling preserves temporal information while avoiding cross-patient filling.
+* Aggregating clinical measurements into physiological domains provides a compact feature representation.
+* Temporal features, particularly `ICULOS` and `Hour`, contributed substantially to model predictions.
+* XGBoost achieved a test PR-AUC of **0.092856** and ROC-AUC of **0.791266**.
+* Random Forest achieved a slightly higher F1-score and recall at its selected threshold.
+* No single metric completely describes performance on this highly imbalanced problem.
 
 ---
 
-# 🚀 Future Improvements
+# Limitations
+
+Several limitations should be considered:
+
+* The project uses a historical benchmark dataset rather than prospectively collected clinical data.
+* The dataset contains substantial missingness.
+* Forward filling assumes that a previously observed value remains informative until a new measurement is available.
+* The clinical reference ranges used for deviation features are heuristic feature-engineering ranges and are not validated sepsis thresholds.
+* The five clinical domains are project-defined groupings rather than formal clinical scoring systems.
+* The dataset contains repeated observations per patient, so temporal dependence remains important.
+* Model performance may not generalize to other hospitals, populations, or clinical workflows.
+* The model has not undergone external validation.
+* The project is not intended for clinical deployment or patient-level medical decision-making.
+
+---
+
+# Future Improvements
 
 Potential future work includes:
 
-* Hyperparameter optimization
-* More advanced temporal feature engineering
-* Time-series-specific modeling
-* Temporal deep-learning approaches
-* Improved missingness modeling
-* Probability calibration
-* More systematic threshold analysis
-* External validation using an independent dataset
-* Prospective evaluation
-* Additional explainability techniques
-* Model monitoring and drift analysis
-* Development of a prediction API
-* Development of an interactive demonstration interface
+* Hyperparameter optimization using systematic search.
+* More extensive temporal feature engineering.
+* Rolling-window and trend-based features.
+* Missingness indicator features.
+* Patient-level sequential models.
+* LSTM, GRU, or Transformer-based approaches.
+* More extensive calibration analysis.
+* External validation using an independent dataset.
+* Cost-sensitive threshold optimization based on an explicit clinical objective.
+* Comparison with additional boosting algorithms.
+* More detailed subgroup and fairness analysis.
 
 ---
 
-# 📁 Project Notebooks
+# Notebook Workflow
 
 The project is organized into six main notebooks.
 
-### `01_eda.ipynb`
+### 01 — Exploratory Data Analysis
 
-Exploratory analysis of:
+`notebooks/01_eda.ipynb`
 
-* Dataset structure
-* Missing values
-* Class imbalance
-* Patient-level statistics
-* Outliers
-* Correlations
-* Feature distributions
-* Temporal patterns
+Performs dataset exploration, class distribution analysis, missingness analysis, patient-level statistics, correlations, outlier analysis, and temporal analysis.
 
-### `02_data_preprocessing.ipynb`
-
-Includes:
-
-* Patient-level train/validation/test splitting
-* Patient-wise forward filling
-* Clinical-domain feature engineering
-* Domain-level deviation scores
-* Feature selection
-* Final processed dataset generation
-
-### `03_modeling_xgboost.ipynb`
-
-Includes:
-
-* XGBoost model development
-* Class imbalance handling
-* Validation analysis
-* Threshold analysis
-* Feature importance
-* Permutation importance
-* SHAP analysis
-* Model saving
-
-### `04_modeling_baselines.ipynb`
-
-Develops and evaluates:
-
-* Logistic Regression
-* Random Forest
-* HistGradientBoosting
-* Linear SVM
-
-### `05_model_comparison.ipynb`
-
-Performs:
-
-* Validation comparison
-* ROC-AUC comparison
-* PR-AUC comparison
-* Threshold analysis
-* Final test comparison
-* Confusion matrices
-* Results export
-
-### `06_final_evaluation.ipynb`
-
-Provides the final focused evaluation of the selected XGBoost model, including:
-
-* Final test predictions
-* Classification metrics
-* Confusion matrix
-* Precision-Recall curve
-* ROC curve
-* Classification report
-* Feature importance
-* Final interpretation
-* Limitations
+**Detailed documentation:**
+[01_eda_summary.md](summary/01_eda_summary.md)
 
 ---
 
-# 🚀 Installation
+### 02 — Data Preprocessing
+
+`notebooks/02_data_preprocessing.ipynb`
+
+Covers patient-level splitting, patient-wise forward filling, clinical deviation features, domain-level aggregation, ICU unit representation, and construction of the final feature set.
+
+**Detailed documentation:**
+[02_preprocessing_summary.md](summary/02_preprocessing_summary.md)
+
+---
+
+### 03 — XGBoost Modeling
+
+`notebooks/03_modeling_xgboost.ipynb`
+
+Develops the XGBoost model, handles class imbalance, evaluates validation performance, examines learning behavior, performs threshold analysis, and investigates feature importance.
+
+**Detailed documentation:**
+[03_xgboost_modeling_summary.md](summary/03_xgboost_modeling_summary.md)
+
+---
+
+### 04 — Baseline Models
+
+`notebooks/04_modeling_baselines.ipynb`
+
+Trains and evaluates Logistic Regression, Random Forest, HistGradientBoosting, and Linear SVM baseline models.
+
+**Detailed documentation:**
+[04_baseline_models_summary.md](summary/04_baseline_models_summary.md)
+
+---
+
+### 05 — Model Comparison
+
+`notebooks/05_model_comparison.ipynb`
+
+Compares all evaluated models using validation and held-out test metrics and applies validation-selected thresholds.
+
+**Detailed documentation:**
+[05_model_comparison_summary.md](summary/05_model_comparison_summary.md)
+
+---
+
+### 06 — Final Evaluation
+
+`notebooks/06_final_evaluation.ipynb`
+
+Performs the final XGBoost evaluation using the validation-selected configuration and held-out test set. Includes the confusion matrix, PR curve, ROC curve, classification report, feature importance, interpretation, limitations, and conclusion.
+
+**Detailed documentation:**
+[06_final_evaluation_summary.md](summary/06_final_evaluation_summary.md)
+
+---
+
+# Detailed Project Summaries
+
+For readers who want a deeper understanding of the methodology and reasoning behind each stage, the repository includes a dedicated summary for every notebook.
+
+| Notebook                      | Detailed Summary                                                         |
+| ----------------------------- | ------------------------------------------------------------------------ |
+| `01_eda.ipynb`                | [01_eda_summary.md](summary/01_eda_summary.md)                           |
+| `02_data_preprocessing.ipynb` | [02_preprocessing_summary.md](summary/02_preprocessing_summary.md)       |
+| `03_modeling_xgboost.ipynb`   | [03_xgboost_modeling_summary.md](summary/03_xgboost_modeling_summary.md) |
+| `04_modeling_baselines.ipynb` | [04_baseline_models_summary.md](summary/04_baseline_models_summary.md)   |
+| `05_model_comparison.ipynb`   | [05_model_comparison_summary.md](summary/05_model_comparison_summary.md) |
+| `06_final_evaluation.ipynb`   | [06_final_evaluation_summary.md](summary/06_final_evaluation_summary.md) |
+
+> **For in-depth understanding:** The summary files explain the methodology, important implementation decisions, results, interpretation, and limitations of each notebook. The notebooks contain the corresponding code and analysis.
+
+---
+
+# Installation
 
 Clone the repository:
 
 ```bash
-git clone <repository-url>
-cd sepsis-prediction
+git clone https://github.com/DipeshGhimire33/Intern_project.git
+cd Intern_project
 ```
 
 Create a virtual environment:
@@ -841,100 +659,88 @@ Create a virtual environment:
 python -m venv venv
 ```
 
-### Windows
+Activate it on Windows:
 
 ```bash
 venv\Scripts\activate
 ```
 
-### Linux/macOS
+Activate it on Linux/macOS:
 
 ```bash
 source venv/bin/activate
 ```
 
-Install the dependencies:
+Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
-# ▶️ Usage
-
-After activating the virtual environment and installing the dependencies, start Jupyter:
+Launch Jupyter:
 
 ```bash
 jupyter notebook
 ```
 
-Then run the notebooks in the following order:
+---
+
+# Usage
+
+The notebooks should generally be executed in the following order:
 
 ```text
 01_eda.ipynb
-        ↓
+      ↓
 02_data_preprocessing.ipynb
-        ↓
+      ↓
 03_modeling_xgboost.ipynb
-        ↓
+      ↓
 04_modeling_baselines.ipynb
-        ↓
+      ↓
 05_model_comparison.ipynb
-        ↓
+      ↓
 06_final_evaluation.ipynb
 ```
 
-The notebooks should be executed sequentially because later notebooks depend on processed datasets, saved models, and evaluation results generated earlier in the workflow.
+The required dataset files are not included in the repository and must be obtained separately from the dataset sources.
 
 ---
 
-# 📄 Results and Summaries
+# Results and Reproducibility
 
-Detailed project findings are documented in the `summary/` directory:
+The repository contains:
 
-```text
-summary/
-├── 01_eda_summary.md
-├── 02_preprocessing_summary.md
-├── 03_xgboost_modeling_summary.md
-├── 04_baseline_models_summary.md
-├── 05_model_comparison_summary.md
-└── 06_final_evaluation_summary.md
-```
+* Trained model files in `models/`
+* Validation comparison results in `results/`
+* Test comparison results in `results/`
+* XGBoost classification report in `results/`
+* Detailed notebook summaries in `summary/`
+* Complete analysis notebooks in `notebooks/`
 
-Model comparison results are stored in:
-
-```text
-results/
-├── validation_model_comparison.csv
-├── test_model_comparison.csv
-└── xgboost_classification_report.txt
-```
+The datasets themselves are excluded because of their large size.
 
 ---
 
-# 👨‍💻 Author
+# Author
 
 **Dipesh Ghimire**
 
-Data Science & Machine Learning Intern
+Machine Learning / Data Science Internship Project
 
-* **GitHub:** [Add GitHub profile]
-* **LinkedIn:** [Add LinkedIn profile]
-
----
-
-# 📄 License
-
-This project was developed for **educational and internship purposes**.
-
-The dataset remains subject to the terms, conditions, and licensing requirements of its original source.
+**Github :** https://github.com/DipeshGhimire33/Intern_project
+**LinkedIn :** https://www.linkedin.com/in/dipesh-ghimire-b00118370/
 
 ---
 
-## ⚠️ Disclaimer
+# License
 
-This project is a machine learning research and educational project.
+This project is intended for educational and research purposes.
 
-The predictions generated by the model **must not be interpreted as medical diagnoses, clinical recommendations, or treatment decisions**. Real-world clinical use would require appropriate clinical validation, regulatory review, prospective testing, and integration with qualified healthcare professionals.
+---
+
+# Disclaimer
+
+This project is **not a medical device, diagnostic system, or clinical decision-support tool**.
+
+The predictions and analyses presented here are intended only for educational and research purposes and should not be used to diagnose sepsis, guide treatment, or make clinical decisions.
