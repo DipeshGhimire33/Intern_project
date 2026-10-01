@@ -294,11 +294,13 @@ For baseline models that required complete numerical inputs, median imputation w
 
 # 🧠 Feature Engineering
 
+---
+
 ## 6. Clinical Domain Features
 
-Rather than expanding the feature space with a large number of individual derived variables, the project used a **dimensionality-reduction approach**.
+Rather than using all original clinical measurements independently, the project applied a **domain-level feature aggregation approach** to reduce the clinical feature space while retaining information from related physiological measurements.
 
-The original clinical variables were grouped into five clinical domains:
+The original PhysioNet/CinC 2019 dataset provides definitions for individual vital signs and laboratory variables, but it does **not prescribe the five clinical domains used in this project**. The following domains were therefore defined specifically for this project based on the physiological system or clinical interpretation represented by the variables.
 
 ### Hemodynamic
 
@@ -306,6 +308,8 @@ The original clinical variables were grouped into five clinical domains:
 * SBP
 * MAP
 * DBP
+
+These measurements describe heart rate and arterial blood pressure and were grouped to represent cardiovascular and circulatory status.
 
 ### Respiratory
 
@@ -317,6 +321,8 @@ The original clinical variables were grouped into five clinical domains:
 * pH
 * PaCO2
 * SaO2
+
+These variables describe respiration, oxygenation, ventilation, and related physiological status. Temperature is a general vital sign rather than a strictly respiratory measurement, but was included in this broader physiological domain for the project's feature-engineering design.
 
 ### Renal / Metabolic
 
@@ -332,6 +338,8 @@ The original clinical variables were grouped into five clinical domains:
 * Glucose
 * Lactate
 
+These variables represent kidney-function-related measurements, electrolytes, glucose, lactate, and acid-base/metabolic status.
+
 ### Inflammatory / Hematological
 
 * WBC
@@ -339,6 +347,8 @@ The original clinical variables were grouped into five clinical domains:
 * Hgb
 * Hct
 * Fibrinogen
+
+These measurements represent white blood cells, blood-cell characteristics, platelet status, and blood/coagulation-related physiology.
 
 ### Hepatic / Coagulation
 
@@ -349,32 +359,35 @@ The original clinical variables were grouped into five clinical domains:
 * PTT
 * TroponinI
 
-To reduce the dimensionality of the original clinical variables while preserving broad physiological information, the project grouped related measurements into five clinically motivated domains. These domains were **defined for this project** based on the physiological system or clinical interpretation represented by each variable; they are not predefined categories in the original PhysioNet dataset.
+AST, alkaline phosphatase, and bilirubin measurements are associated with hepatic laboratory assessment, while PTT represents coagulation status. Troponin I is primarily a cardiac injury marker and was included in this broader laboratory/organ-injury domain rather than being treated as a liver-specific measurement.
 
-| Clinical Domain                | Included Features                                                                                       | Rationale                                                                                                                                                                                |
-| ------------------------------ | ------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Hemodynamic**                | HR, SBP, MAP, DBP                                                                                       | Heart rate and blood-pressure measurements representing cardiovascular and circulatory status.                                                                                           |
-| **Respiratory**                | Resp, O2Sat, Temp, EtCO2, FiO2, pH, PaCO2, SaO2                                                         | Measurements describing respiration, oxygenation, ventilation and related physiological status. Temperature is treated as a general physiological vital sign within this broader domain. |
-| **Renal_Metabolic**            | BaseExcess, HCO3, BUN, Creatinine, Calcium, Chloride, Magnesium, Phosphate, Potassium, Glucose, Lactate | Kidney-function, electrolyte, metabolic and acid-base measurements.                                                                                                                      |
-| **Inflammatory_Hematological** | WBC, Platelets, Hgb, Hct, Fibrinogen                                                                    | Blood-cell, hematological and inflammation/coagulation-related measurements.                                                                                                             |
-| **Hepatic_Coagulation**        | AST, Alkalinephos, Bilirubin_total, Bilirubin_direct, PTT, TroponinI                                    | Liver-associated biomarkers, coagulation measurements and selected organ-injury laboratory markers.                                                                                      |
+### Clinical reference basis
 
-The original PhysioNet/CinC 2019 documentation identifies the variables as vital signs, laboratory measurements and demographic/administrative variables. The additional five-domain organization was introduced as project-specific feature engineering rather than as an official dataset classification.
+The domain assignments were informed by:
 
-Clinical interpretation was supported using the PhysioNet variable definitions and standard clinical laboratory references, including MedlinePlus and the Merck Manual.
+* The original PhysioNet/CinC 2019 variable definitions
+* Standard clinical laboratory classifications
+* Standard medical reference sources for blood counts, kidney/metabolic testing, liver testing, and coagulation-related measurements
 
+These domain assignments are **project-specific feature-engineering categories**, not formal diagnostic categories or validated clinical scoring systems.
 
+### References
+
+* **PhysioNet/CinC Challenge 2019 — Early Prediction of Sepsis from Clinical Data**
+  https://physionet.org/content/challenge-2019/1.0.0/
+
+* **MedlinePlus — Complete Blood Count (CBC)**
+  https://medlineplus.gov/lab-tests/complete-blood-count-cbc/
+
+* **MedlinePlus — Kidney Function Tests**
+  https://medlineplus.gov/ency/article/003435.htm
+
+* **MedlinePlus — Basic Metabolic Panel**
+  https://medlineplus.gov/lab-tests/basic-metabolic-panel-bmp/
+
+* **Merck Manual Professional Edition — Laboratory Tests of the Liver and Gallbladder**
+  https://www.merckmanuals.com/professional/hepatic-and-biliary-disorders/testing-for-hepatic-and-biliary-disorders/laboratory-tests-of-the-liver-and-gallbladder
 ---
-**References:**
-
-* PhysioNet/CinC Challenge 2019 — *Early Prediction of Sepsis from Clinical Data*
-* MedlinePlus — Complete Blood Count (CBC)
-* MedlinePlus — Kidney Function Tests / Basic Metabolic Panel
-* Merck Manual Professional Edition — Laboratory Tests of the Liver and Gallbladder
-
-*These domain assignments are intended for machine-learning feature engineering and should not be interpreted as formal diagnostic categories.*
-
---- 
 
 ## 7. Domain-Level Deviation Scores
 
