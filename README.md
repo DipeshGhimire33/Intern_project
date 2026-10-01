@@ -735,9 +735,9 @@ The datasets themselves are excluded from version control because of their large
 
 Machine Learning / Data Science Internship Project
 
-**GitHub:** DipeshGhimire33/Intern_project
+**GitHub:** https://github.com/DipeshGhimire33/Intern_project
 
-**LinkedIn:** Dipesh Ghimire
+**LinkedIn:** https://www.linkedin.com/in/dipesh-ghimire-b00118370/
 
 ---
 
