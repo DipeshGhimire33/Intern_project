@@ -291,3 +291,5 @@ The main findings from the exploratory analysis were:
 The exploratory analysis showed that the dataset presents several challenges for machine-learning development, particularly severe class imbalance, extensive missing laboratory measurements, repeated observations from the same patients, correlated clinical variables, and overlapping feature distributions between sepsis and non-sepsis observations.
 
 These findings motivated the preprocessing strategy used in the next stage of the project, including patient-level dataset splitting, patient-wise forward filling, clinical deviation features, clinical domain aggregation, dimensionality reduction, and preservation of missing values for models capable of handling them natively.
+
+---
