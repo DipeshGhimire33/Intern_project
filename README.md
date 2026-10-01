@@ -363,6 +363,17 @@ The original PhysioNet/CinC 2019 documentation identifies the variables as vital
 
 Clinical interpretation was supported using the PhysioNet variable definitions and standard clinical laboratory references, including MedlinePlus and the Merck Manual.
 
+
+---
+**References:**
+
+* PhysioNet/CinC Challenge 2019 — *Early Prediction of Sepsis from Clinical Data*
+* MedlinePlus — Complete Blood Count (CBC)
+* MedlinePlus — Kidney Function Tests / Basic Metabolic Panel
+* Merck Manual Professional Edition — Laboratory Tests of the Liver and Gallbladder
+
+*These domain assignments are intended for machine-learning feature engineering and should not be interpreted as formal diagnostic categories.*
+
 --- 
 
 ## 7. Domain-Level Deviation Scores
@@ -907,17 +918,6 @@ This project was developed for **educational and internship purposes**.
 
 The dataset remains subject to the terms, conditions, and licensing requirements of its original source.
 
----
-
----
-**References:**
-
-* PhysioNet/CinC Challenge 2019 — *Early Prediction of Sepsis from Clinical Data*
-* MedlinePlus — Complete Blood Count (CBC)
-* MedlinePlus — Kidney Function Tests / Basic Metabolic Panel
-* Merck Manual Professional Edition — Laboratory Tests of the Liver and Gallbladder
-
-These domain assignments are intended for machine-learning feature engineering and should not be interpreted as formal diagnostic categories.
 ---
 
 ## ⚠️ Disclaimer
