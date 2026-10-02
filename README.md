@@ -51,6 +51,7 @@ sepsis-prediction/
 ├── models/
 │   ├── xgboost_sepsis_model.pkl
 │   ├── logistic_regression_baseline.pkl
+│   ├── clinical_domain_weights.pkl
 │   ├── random_forest_baseline.pkl
 │   ├── hist_gradient_boosting_baseline.pkl
 │   └── linear_svm_baseline.pkl
@@ -738,6 +739,7 @@ Machine Learning / Data Science Internship Project
 **GitHub:** https://github.com/DipeshGhimire33/Intern_project
 
 **LinkedIn:** https://www.linkedin.com/in/dipesh-ghimire-b00118370/
+
 
 ---
 
