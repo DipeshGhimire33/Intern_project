@@ -8,3 +8,4 @@ shap
 jupyter
 notebook
 joblib
+streamlit

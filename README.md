@@ -47,14 +47,19 @@ The main objective is to investigate whether aggregated clinical and temporal in
 ## Project Structure
 
 ```text
-sepsis-prediction/
+## Project Structure
+
+```text
+Intern_project/
+├── app.py
 ├── models/
 │   ├── xgboost_sepsis_model.pkl
-│   ├── logistic_regression_baseline.pkl
 │   ├── clinical_domain_weights.pkl
+│   ├── logistic_regression_baseline.pkl
 │   ├── random_forest_baseline.pkl
 │   ├── hist_gradient_boosting_baseline.pkl
 │   └── linear_svm_baseline.pkl
+│
 ├── notebooks/
 │   ├── 01_EDA.ipynb
 │   ├── 02_Data_preprocessing.ipynb
@@ -62,10 +67,12 @@ sepsis-prediction/
 │   ├── 04_modeling_baselines.ipynb
 │   ├── 05_model_comparison.ipynb
 │   └── 06_final_evaluation.ipynb
+│
 ├── results/
 │   ├── test_model_comparison.csv
 │   ├── validation_model_comparison.csv
 │   └── xgboost_classification_report.csv
+│
 ├── summary/
 │   ├── 01_EDA_summary.md
 │   ├── 02_Data_preprocessing.md
@@ -73,9 +80,11 @@ sepsis-prediction/
 │   ├── 04_model_baseline_summary.md
 │   ├── 05_model_comparison_summary.md
 │   └── 06_final_evaluation_summary.md
+│
 ├── requirements.txt
 ├── README.md
 └── .gitignore
+
 ```
 
 > The raw and processed datasets are intentionally excluded from the repository because of their large file sizes. They are used locally during the notebook workflow.
@@ -511,6 +520,81 @@ Feature importance should be interpreted as **model behavior**, not as evidence 
 
 ---
 
+# Streamlit Web Application
+
+A Streamlit-based web application was developed to provide an interactive interface for the trained sepsis prediction model.
+
+The application is implemented in:
+
+```text
+app.py
+```
+
+The web application reproduces the project's feature-engineering pipeline rather than asking users to manually enter the final engineered model features.
+
+### Application Workflow
+
+```text
+Clinical Measurements
+        ↓
+Reference-Range Deviation
+        ↓
+Training-Derived Domain Weights
+        ↓
+Five Clinical Domain Scores
+        ↓
+Temporal / Demographic / ICU Features
+        ↓
+10 Final Model Features
+        ↓
+Trained XGBoost Model
+        ↓
+Sepsis Probability
+        ↓
+Validation-Selected Threshold (0.80)
+        ↓
+Prediction
+```
+
+### Main Application Features
+
+The Streamlit application allows users to:
+
+* Enter available clinical measurements.
+* Enter temporal, demographic, and ICU-related information.
+* Automatically calculate the five clinical domain scores.
+* Generate the same 10 model features used during XGBoost training.
+* Generate a sepsis probability using the saved XGBoost model.
+* Apply the validation-selected classification threshold of **0.80**.
+* View the generated model features before the final prediction.
+* View the resulting prediction and predicted probability.
+
+The application uses the saved:
+
+```text
+models/xgboost_sepsis_model.pkl
+models/clinical_domain_weights.pkl
+```
+
+The `clinical_domain_weights.pkl` file contains the training-derived feature weights required to reproduce the domain-level feature engineering used by the original model.
+
+### Running the Web Application
+
+After installing the project dependencies, run:
+
+```bash
+streamlit run app.py
+```
+
+The application will then be available locally through the Streamlit server, normally at:
+
+```text
+http://localhost:8501
+```
+
+> **Important:** The Streamlit application is intended for educational and research demonstration purposes. It is not a medical diagnostic system and should not be used for clinical decision-making.
+---
+
 # Key Findings
 
 * The dataset is highly imbalanced at the observation level.
@@ -695,6 +779,10 @@ jupyter notebook
 
 # Usage
 
+The project can be explored through either the Jupyter notebooks or the Streamlit web application.
+
+### Notebook Workflow
+
 The notebooks should generally be executed in the following order:
 
 ```text
@@ -711,7 +799,31 @@ The notebooks should generally be executed in the following order:
 06_final_evaluation.ipynb
 ```
 
-The required dataset files are not included in the repository and must be obtained separately from the dataset sources.
+### Streamlit Web Application
+
+To launch the interactive prediction application:
+
+```bash
+streamlit run app.py
+```
+
+The application accepts clinical measurements, performs the project's feature-engineering process, generates the required model features, and passes them to the trained XGBoost model.
+
+The required model artifacts are stored in:
+
+```text
+models/xgboost_sepsis_model.pkl
+models/clinical_domain_weights.pkl
+```
+
+The datasets are not included in the repository and must be obtained separately from the documented dataset sources.
+
+### Two Ways to Explore the Project
+
+| Component         | Purpose                                                                |
+| ----------------- | ---------------------------------------------------------------------- |
+| Jupyter Notebooks | Detailed analysis, preprocessing, modeling, comparison, and evaluation |
+| `app.py`          | Interactive Streamlit-based sepsis prediction demonstration            |
 
 ---
 
